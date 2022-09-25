@@ -1,4 +1,5 @@
 const express = require("express");
+var cors = require("cors");
 const bodyParser = require("body-parser");
 const NaturalLanguageUnderstandingV1 = require("ibm-watson/natural-language-understanding/v1");
 const { IamAuthenticator } = require("ibm-watson/auth");
@@ -8,6 +9,7 @@ const API_KEY_WATSON_NLU = "vwPLAEce1W7w7vYEzXbqlf-Mge_loZE9Yf7pDZlpDKoB";
 const API_KEY_GIPHY = "XARqrm0gCp2248viPSXkM3X6hywv8mSy";
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json({ type: "application/json" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -31,8 +33,19 @@ const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
 //////////////////////// Endpoints ////////////////////////////
 ///////////////////////////////////////////////////////////////
 
-app.get("/getRelevantGIF", (req, res) => {
+app.post("/api/getRelevantGif", (req, res) => {
   const userText = req.body.text;
+  const giphy = (searchQuery) => {
+    axios({
+      method: "get",
+      url: `https://api.giphy.com/v1/gifs/search?q=${searchQuery}&api_key=${API_KEY_GIPHY}&limit=10`,
+    })
+      .then((response) => res.status(200).json(response.data))
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send();
+      });
+  };
 
   if (
     userText &&
@@ -49,28 +62,24 @@ app.get("/getRelevantGIF", (req, res) => {
         text: userText,
       })
       .then((analysisResults) => {
-        const searchQuery = analysisResults.result.keywords[0].text;
+        const keyword = analysisResults.result.keywords[0].text;
 
-        if (searchQuery)
-          axios({
-            method: "get",
-            url: `https://api.giphy.com/v1/gifs/search?q=${searchQuery}&api_key=${API_KEY_GIPHY}&limit=1`,
-          })
-            .then((response) =>
-              res.status(200).send(response.data.data[0].embed_url)
-            )
-            .catch((err) => {
-              console.log(err);
-              res.status(500).send();
+        keyword
+          ? giphy(keyword)
+          : res.status(400).json({
+              msg: "Invalid request",
             });
-        else
-          res.status(400).json({
-            msg: "Invalid request",
-          });
       })
       .catch((err) => {
-        console.log(err);
-        res.status(500).send();
+        if (
+          err.status === 422 &&
+          JSON.parse(err.body).error === "not enough text for language id"
+        )
+          giphy(userText);
+        else {
+          console.log(err);
+          res.status(500).send();
+        }
       });
   else
     res.status(400).json({
