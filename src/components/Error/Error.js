@@ -1,3 +1,5 @@
+import "./Error.css";
+
 const Error = (props) => {
   if (!props.isError) {
     return null;

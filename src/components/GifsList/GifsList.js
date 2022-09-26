@@ -1,3 +1,5 @@
+import "./GifsList.css";
+
 const Gif = ({ alt, url }) => {
   return (
     <div className="gif-item">
@@ -16,7 +18,7 @@ const GifsList = ({ gifs }) => {
       />
     );
   });
-  return <div className="text-container">{items}</div>;
+  return <div className="gifs-container">{items}</div>;
 };
 
 export default GifsList;
