@@ -1,50 +1,22 @@
 import { useState } from "react";
+import { SearchBar, GifsList } from "./components";
+import { getRelevantGifs } from "./api/gifs";
 import "./App.css";
-import Search from "./components/Search/Search";
-import Error from "./components/Error/Error";
-import GifsList from "./components/GifsList/GifsList";
-
-const axios = require("axios").default;
 
 function App() {
   const [gifs, setGifs] = useState([]);
-  const [err, setErr] = useState(false);
 
-  const handleSearch = (text) => {
-    if (text.length === 0 || text.length > 10000) {
-      setErr(true);
-      return;
-    }
+  const handleSearch = async (text) => {
+    const res = await getRelevantGifs(text);
 
-    const apiCall = async () => {
-      const res = await axios({
-        method: "post",
-        url: `${process.env.REACT_APP_URL}/api/getRelevantGif`,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: { text },
-      }).catch((err) => {
-        console.log(err);
-      });
-
-      setGifs(res.data.data);
-    };
-
-    apiCall();
-
-    setErr(false);
+    setGifs(res.data.data);
   };
 
   return (
     <div className="App">
       <h1>IBM Demo App</h1>
       <h3>Type text into the form and press search button</h3>
-      <Search handler={handleSearch} />
-      <Error
-        isError={err}
-        text="Please enter a text with min. 1 char and max. 10 000 chars"
-      />
+      <SearchBar handler={handleSearch} />
       {gifs && <GifsList gifs={gifs} />}
     </div>
   );

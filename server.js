@@ -33,7 +33,7 @@ const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
 //////////////////////// Endpoints ////////////////////////////
 ///////////////////////////////////////////////////////////////
 
-app.post("/api/getRelevantGif", (req, res) => {
+app.post("/api/getRelevantGifs", (req, res) => {
   const userText = req.body.text;
   const giphy = (searchQuery) => {
     axios({

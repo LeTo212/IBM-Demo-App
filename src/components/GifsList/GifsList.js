@@ -1,12 +1,10 @@
 import "./GifsList.css";
 
-const Gif = ({ alt, url }) => {
-  return (
-    <div className="gif-item">
-      <img alt={alt} src={url} />
-    </div>
-  );
-};
+const Gif = ({ alt, url }) => (
+  <div className="gif-item">
+    <img alt={alt} src={url} />
+  </div>
+);
 
 const GifsList = ({ gifs }) => {
   const items = gifs.map((itemData) => {
