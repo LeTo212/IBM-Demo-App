@@ -1,0 +1,22 @@
+version: '3'
+
+networks:
+    back:
+
+services:
+
+  api:
+    build: ./server
+    restart: always
+    ports:
+      - "3333:3333"
+    networks:
+      - back
+
+  web:
+    build: ./client
+    restart: always
+    ports:
+      - "3000:3000"
+    networks:
+      - back

@@ -14,7 +14,7 @@ app.use(bodyParser.json({ type: "application/json" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Start server
-const server = app.listen(5556, "127.0.0.1", () => {
+const server = app.listen(3333, () => {
   const port = server.address().port;
   console.log("Listening on port " + port);
 });
