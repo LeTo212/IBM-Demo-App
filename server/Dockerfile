@@ -1,6 +1,7 @@
-FROM node:14.14.0-alpine
+FROM node:18.0.0-alpine
 WORKDIR /app
-COPY ./package.json ./yarn.lock
+COPY ./package.json .
+COPY ./yarn.lock .
 RUN yarn install
 COPY . .
 CMD ["yarn", "dev"]

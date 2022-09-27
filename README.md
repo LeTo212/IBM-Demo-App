@@ -8,6 +8,6 @@ Developed by Dominykas Miezanskas ([LinkedIn](https://www.linkedin.com/in/dominy
 
 In the project directory, you can run:
 
-### `docker compose up`
+### `docker compose up --build`
 
 This command runs the app in the development environment. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
