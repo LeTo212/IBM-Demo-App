@@ -1,12 +1,12 @@
-import "./GifsList.css";
+import "./GifsGallery.css";
 
 const Gif = ({ alt, url }) => (
-  <div className="gif-item">
+  <div className="gifs-gallery-item">
     <img alt={alt} src={url} />
   </div>
 );
 
-const GifsList = ({ gifs }) => {
+const GifsGallery = ({ gifs }) => {
   const items = gifs.map((itemData) => {
     return (
       <Gif
@@ -16,7 +16,7 @@ const GifsList = ({ gifs }) => {
       />
     );
   });
-  return <div className="gifs-container">{items}</div>;
+  return <div className="gifs-gallery">{items}</div>;
 };
 
-export default GifsList;
+export default GifsGallery;

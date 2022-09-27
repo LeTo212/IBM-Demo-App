@@ -1,5 +1,6 @@
 import Error from "./Error/Error";
-import GifsList from "./GifsList/GifsList";
+import GifsGallery from "./GifsGallery/GifsGallery";
+import LoadingSpinner from "./LoadingSpinner/LoadingSpinner";
 import SearchBar from "./SearchBar/SearchBar";
 
-export { Error, GifsList, SearchBar };
+export { Error, GifsGallery, LoadingSpinner, SearchBar };
