@@ -12,3 +12,7 @@ docker compose up --build
 ```
 
 This command runs the app in the development environment. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+<p align="center">
+  <img width=70% alt="Demo" src="https://github.com/LeTo212/IBM-Demo-App/assets/67475107/18f39866-2367-4a4d-9304-bee5692970ae">
+</p>
